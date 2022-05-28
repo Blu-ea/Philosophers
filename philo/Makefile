@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/05/28 06:50:44 by amiguez          ###   ########.fr        #
+#    Updated: 2022/05/28 07:43:09 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME	:= philo
 # **************************************************************************** #
 LST_SRCS	:=	main.c\
 				pars.c\
+				philo_generator.c\
+				time.c\
 				debug.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
 LST_INCS	:= philo.h
