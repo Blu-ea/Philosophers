@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:07:41 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/25 19:52:03 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/05/28 06:53:23 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	ft_pars(int argc, char **argv, t_philo *data)
 
 void	ft_check_values(t_philo data)
 {
-	if (data->nb_philo < 0)
+	if (data.nb_philo < 0)
 		ft_error ("Error: There must be at least one philosopher");
-	if (data->time_to_die < 0)
+	if (data.time_to_die < 0)
 		ft_error ("Error: time_to_die must be positive");
-	if (data->time_to_eat < 0)
+	if (data.time_to_eat < 0)
 		ft_error ("Error: time_to_eat must be positive");
-	if (data->time_to_sleep < 0)
+	if (data.time_to_sleep < 0)
 		ft_error ("Error: time_to_sleep must be positive");
 }

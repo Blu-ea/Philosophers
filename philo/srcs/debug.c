@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/23 19:01:50 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/25 18:29:17 by amiguez          ###   ########.fr       */
+/*   Created: 2022/05/28 06:48:33 by amiguez           #+#    #+#             */
+/*   Updated: 2022/05/28 06:54:58 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+#include <stdio.h>
 
-int	main(int argc, char **argv)
+void	ft_printf_data(t_philo data)
 {
-	t_philo		data;
-
-	ft_pars(argc, argv, &data);
-}
-
-void	ft_error(char *str)
-{
-	ft_printf("%s\n", str);
-	exit(1);
+	printf ("====== Debug ======\n");
+	printf("nb_philo      : %d\n", data.nb_philo);
+	printf("time_to_die   : %d\n", data.time_to_die);
+	printf("time_to_eat   : %d\n", data.time_to_eat);
+	printf("time_to_sleep : %d\n", data.time_to_sleep);
+	printf("nb_must_eat   : %d\n", data.nb_must_eat);
+	printf ("====== Debug ======\n");
 }
