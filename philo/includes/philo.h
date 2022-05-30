@@ -6,14 +6,14 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/30 02:57:18 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/05/30 08:54:02 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 # include <sys/time.h>
 # include <stdio.h>
 # include <pthread.h>
@@ -44,7 +44,7 @@ typedef struct s_philo
 	struct timeval	current;
 	t_lst_ph		*lst_philo;
 	pthread_mutex_t	*mutex;
-	u_int64_t		time;;
+	u_int64_t		time;
 }		t_philo;
 
 //////////// main.c ////////////
