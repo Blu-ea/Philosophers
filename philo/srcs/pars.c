@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:07:41 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/28 07:09:44 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/05/29 09:18:26 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_pars(int argc, char **argv, t_philo *data)
 {
 	if (argc != 5 && argc != 6)
-		ft_error ("Error: wrong number of arguments");
+		ft_error ("Error: wrong number of arguments", NULL);
 	data->nb_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -30,11 +30,11 @@ void	ft_pars(int argc, char **argv, t_philo *data)
 void	ft_check_values(t_philo data)
 {
 	if (data.nb_philo < 0)
-		ft_error ("Error: There must be at least one philosopher");
+		ft_error ("Error: There must be at least one philosopher", NULL);
 	if (data.time_to_die < 0)
-		ft_error ("Error: time_to_die must be positive");
+		ft_error ("Error: time_to_die must be positive", NULL);
 	if (data.time_to_eat < 0)
-		ft_error ("Error: time_to_eat must be positive");
+		ft_error ("Error: time_to_eat must be positive", NULL);
 	if (data.time_to_sleep < 0)
-		ft_error ("Error: time_to_sleep must be positive");
+		ft_error ("Error: time_to_sleep must be positive", NULL);
 }
