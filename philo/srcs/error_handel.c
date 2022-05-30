@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 07:29:04 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/30 02:17:36 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/05/30 09:18:42 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_error(char *str, t_philo *data)
 {
-	if(data != NULL)
+
+	if (data != NULL)
 	{
 		if (!data->lst_philo)
 			free(data->lst_philo);

@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/30 08:54:02 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/05/30 09:13:09 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_lst_ph
 	t_philo			*data;
 	pthread_t		thread;
 	int				state;
+	struct timeval	last_eat;
 }	t_lst_ph;
 
 typedef struct s_philo
@@ -65,12 +66,14 @@ void		ft_printf_data(t_philo data);
 //////////// time.c /////////////
 
 u_int64_t	ft_get_time(t_lst_ph ph);
+void		calc_last_eat(t_lst_ph *ph, t_philo *data);
 
 //////////// thread.c ////////////
 
 void		*ft_thread(void *temp);
 void		ft_action_print(t_lst_ph *data, int i, char *str);
 void		pthread_eat(t_philo *data, t_lst_ph *ph);
+void		pthread_sleep(t_philo *data, t_lst_ph *ph);
 
 //////// error_handler.c ////////
 
