@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/31 18:24:35 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/05/30 13:01:13 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@
 # include <pthread.h>
 
 # define DEAD 0
-# define THINKING 2
-# define EATING 3
-# define SLEEPING 4
+# define ALIVE 1
 
-# define WRONG_ARGS 1
-# define MALLOC_ERROR 2
-# define MALLOC_ERROR_2 3
-# define THREAD_ERROR 4
-# define MUTEX_ERROR 5
-# define MUTEX_ERROR_2 6
+# define MAL_1 1
+# define MAL_2 2
+# define WRONG_ARGS 3
+# define THREAD_ERR 4
+# define MUTEX_ERR 5
 
 typedef struct s_philo	t_philo;
 
@@ -40,7 +37,6 @@ typedef struct s_lst_ph
 	t_philo			*data;
 	pthread_t		thread;
 	int				state;
-	int				eat;
 	struct timeval	last_eat;
 }	t_lst_ph;
 
@@ -55,45 +51,43 @@ typedef struct s_philo
 	struct timeval	current;
 	t_lst_ph		*lst_philo;
 	pthread_mutex_t	*mutex;
-	pthread_mutex_t	dead;
 	u_int64_t		time;
 }		t_philo;
 
 //////////// main.c ////////////
 
-// int		main(int argc, char **argv);
-int			ft_init_philo(t_philo *data);
-int			ft_init_threads(t_philo *data);
-int			check_dead(t_philo *data);
-void		ft_leave(t_philo *data);
-void		ft_kill_all(t_philo *data);
+//int		main(int argc, char **argv);
+int			ft_init(t_philo *data);
+int			ft_check_dead(t_philo *data, int id);
+int			thread_create(t_philo *data);
 
 //////////// pars.c ////////////
 
 int			ft_pars(int argc, char **argv, t_philo *data);
-int			ft_check_values(t_philo data, char **argv);
-int			ft_is_all_digit(char *arg);
+int			ft_check_values(t_philo data);
 
-///////// simulation.c //////////
+//////////// debug.c ////////////
 
-void		*ft_simul(void *philo);
-void		ft_eat(t_lst_ph *philo, t_philo *data);
-void		ft_sleep(t_lst_ph *philo, t_philo *data);
-void		ft_print_act(t_philo *data, t_lst_ph *ph, char *str);
+void		ft_printf_data(t_philo data);
+
+//////////// time.c /////////////
+
+u_int64_t	ft_get_time(t_lst_ph ph);
+void		calc_last_eat(t_lst_ph *ph, t_philo *data);
+void		ft_usleep(useconds_t time);
+
+//////////// thread.c ////////////
+
+void		*ft_thread(void *temp);
+void		ft_action_print(t_lst_ph *data, int i, char *str);
+void		pthread_eat(t_philo *data, t_lst_ph *ph);
+void		pthread_sleep(t_philo *data, t_lst_ph *ph);
 
 //////// error_handler.c ////////
 
-int			ft_error(int err, t_philo *data, int place);
-void		ft_error_mutex(t_philo *data, int place);
-void		ft_error_thread(t_philo *data, int place);
-void	ft_error_mutex2(t_philo *data, int place);
-
-//////////// time.c ////////////
-
-u_int32_t	ft_get_time(t_philo data);
-void		ft_usleep(useconds_t time);
-void		calc_last_eat(t_lst_ph *ph, t_philo *data);
-
-void		ft_printf_data(t_philo data);
+int			ft_error(int error, t_philo *data, int i);
+void		ft_error_thread(t_philo *data, int limit);
+void		ft_error_mutex(t_philo *data, int limit);
+void		ft_leave(t_philo *data);
 
 #endif

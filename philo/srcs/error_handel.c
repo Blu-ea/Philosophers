@@ -5,55 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 07:29:04 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/30 12:15:53 by amiguez          ###   ########.fr       */
+/*   Created: 2022/05/31 15:00:58 by amiguez           #+#    #+#             */
+/*   Updated: 2022/05/31 18:13:34 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_error(int error, t_philo *data, int i)
+int	ft_error(int err, t_philo *data, int place)
 {
-	if (error == WRONG_ARGS)
-		printf("Error: Wrongs args\n");
-	else if (error == MAL_1)
-		printf("Error: Malloc failed\n");
-	else if (error == MAL_2)
-		printf("Error: Malloc failed\n");
-	else if (error == THREAD_ERR)
-		ft_error_thread(data, i);
-	else
-		ft_error_mutex(data, error - MUTEX_ERR);
-	return (error);
+	if (err == WRONG_ARGS)
+		printf("Error : Wrong arguments\n");
+	if (err == MALLOC_ERROR || err == MALLOC_ERROR_2)
+		printf ("Error : Malloc failed\n");
+	if (err == MUTEX_ERROR)
+		ft_error_mutex(data, place);
+	if (err == MUTEX_ERROR_2)
+		ft_error_mutex2(data, place);
+	if (err == THREAD_ERROR)
+		ft_error_thread(data, place);
+	if (err >= MALLOC_ERROR_2)
+		free (data->lst_philo);
+	if (err > MALLOC_ERROR_2)
+		free (data->mutex);
+	return (err);
 }
 
-void	ft_error_thread(t_philo *data, int limit)
+void	ft_error_mutex2(t_philo *data, int place)
+{
+	pthread_mutex_destroy(&data->dead);
+	ft_error_mutex(data, place);
+}
+
+void	ft_error_mutex(t_philo *data, int place)
 {
 	int	i;
 
-	i = -1;
-	while (++i < limit)
-		pthread_cancel(data->lst_philo[i].thread);
-	ft_error_mutex(data, data->nb_philo);
-}
-
-void	ft_error_mutex(t_philo *data, int limit)
-{
-	int	i;
-
-	i = -1;
-	while (++i < limit)
+	i = 0;
+	while (i < place)
+	{
 		pthread_mutex_destroy(&data->mutex[i]);
+		i++;
+	}
+	printf("Error : Mutex failed\n");
 }
 
-void	ft_leave(t_philo *data)
+void	ft_error_thread(t_philo *data, int place)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->nb_philo)
+	i = 0;
+	while (i < place)
+	{
 		pthread_join(data->lst_philo[i].thread, NULL);
-	i = -1;
-	while (++i < data->nb_philo)
-		pthread_mutex_destroy(&data->mutex[i]);
+		i++;
+	}
+	printf("Error : Thread failed\n");
+	ft_error_mutex(data, data->nb_philo);
 }

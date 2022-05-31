@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/23 19:01:50 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/30 13:40:03 by amiguez          ###   ########.fr       */
+/*   Created: 2022/05/31 14:58:41 by amiguez           #+#    #+#             */
+/*   Updated: 2022/05/31 18:24:16 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,90 +16,124 @@ int	main(int argc, char **argv)
 {
 	t_philo	data;
 	int		i;
-	int		j;
 
-	i = ft_pars(argc, argv, &data);
+	if (ft_pars(argc, argv, &data))
+		return (ft_error(WRONG_ARGS, &data, 0));
+	i = ft_init_philo(&data);
 	if (i != 0)
 		return (ft_error(i, &data, 0));
-	i = ft_init(&data);
+	if (pthread_mutex_init(&data.dead, NULL))
+		return (ft_error(MUTEX_ERROR_2, &data, i));
+	pthread_mutex_lock(&data.dead);
+	i = ft_init_threads(&data);
 	if (i != 0)
-		return (ft_error(i, &data, 0));
-	gettimeofday(&data.start, NULL);
-	i = thread_create(&data);
-	if (i != 0)
-		return (ft_error(THREAD_ERR, &data, i));
-	while (ft_check_dead(&data, -1) == 0)
-		ft_usleep(10);
-	ft_leave(&data);
-	free (data.lst_philo);
-	free (data.mutex);
+		return (ft_error(THREAD_ERROR, &data, i));
+	pthread_mutex_lock(&data.dead);
+	ft_kill_all(&data);
+	return (0);
 }
 
-int	ft_init(t_philo *data)
+int	ft_init_philo(t_philo *data)
 {
-	int	i;
+	int		i;
 
-	data->lst_philo = malloc(sizeof(t_lst_ph) * data->nb_philo);
-	if (data->lst_philo == NULL)
-		return (MAL_2);
-	data->mutex = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
-	if (data->mutex == NULL)
-		return (MAL_1);
-	i = -1;
-	while (++i < data->nb_philo)
+	i = 0;
+	data->lst_philo = malloc((sizeof(t_lst_ph)) * (data->nb_philo));
+	if (!data->lst_philo)
+		return (MALLOC_ERROR);
+	data->mutex = malloc((sizeof(pthread_mutex_t)) * (data->nb_philo));
+	if (!data->mutex)
+		return (MALLOC_ERROR_2);
+	while (i < data->nb_philo)
 	{
+		printf("philo created\n");
 		data->lst_philo[i].id = i;
+		data->lst_philo[i].eat = 0;
+		data->lst_philo[i].state = THINKING;
+		data->lst_philo[i].fork_left = i;
+		data->lst_philo[i].fork_right = (i + 1) % data->nb_philo;
 		data->lst_philo[i].data = data;
-		data->lst_philo[i].fork_right = i;
-		data->lst_philo[i].fork_left = i - 1;
-		data->lst_philo[i].state = ALIVE;
 		if (pthread_mutex_init(&data->mutex[i], NULL))
-			return (MUTEX_ERR + i);
+			return (ft_error(MUTEX_ERROR, data, i));
+		i++;
 	}
-	if (data->nb_philo != 1)
-		data->lst_philo[0].fork_left = data->nb_philo - 1;
 	return (0);
 }
 
-int	ft_check_dead(t_philo *data, int id)
+int	ft_init_threads(t_philo *data)
+{
+	int	i;
+
+	i = 0;
+	gettimeofday(&data->start, NULL);
+	ft_printf_data(*data);
+	while (i < data->nb_philo)
+	{
+		printf("thread created\n");
+		if (pthread_create(&data->lst_philo[i].thread, NULL,
+				ft_simul, &data->lst_philo[i]))
+			return (ft_error(THREAD_ERROR, data, i));
+		i++;
+	}
+	return (0);
+}
+
+void	ft_kill_all(t_philo *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		calc_last_eat(&data->lst_philo[i], data);
-		if (data->lst_philo[i].state == DEAD)
-		{
-			if (id == i)
-			{
-				printf("{%llu} ========= ", ft_get_time(data->lst_philo[i]));
-				printf("  Philosopher[%d] is  ==== dead\n", i);
-			}
-			return (1);
-		}
+		data->lst_philo[i].state = DEAD;
 		i++;
 	}
-	return (0);
+	ft_leave(data);
 }
 
-int	thread_create(t_philo *data)
+void	ft_leave(t_philo *data)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		data->lst_philo[i].last_eat = data->start;
-		printf ("thread created\n");
-		j = pthread_create(&data->lst_philo[i].thread, NULL,
-				ft_thread, &data->lst_philo[i]);
-		if (j != 0)
-			return (i);
-		ft_usleep(10);
+		pthread_join(data->lst_philo[i].thread, NULL);
 		i++;
 	}
-	return (0);
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		pthread_mutex_destroy(&data->mutex[i]);
+		i++;
+	}
+	free(data->lst_philo);
+	free(data->mutex);
+}
+
+///////////////////////////////////
+
+void	ft_printf_data(t_philo data)
+{
+	printf ("====== Debug ======\n");
+	printf("nb_philo      : %d\n", data.nb_philo);
+	printf("time_to_die   : %d\n", data.time_to_die);
+	printf("time_to_eat   : %d\n", data.time_to_eat);
+	printf("time_to_sleep : %d\n", data.time_to_sleep);
+	printf("nb_must_eat   : %d\n", data.nb_must_eat);
+	printf("\n");
+
+	int	i;
+
+	i = -1;
+	while (++i < data.nb_philo)
+	{
+		printf("------ philo nb %d -----\n", i);
+		printf("id = %d\n", data.lst_philo[i].id);
+		printf("fork left = %d\n", data.lst_philo[i].fork_left);
+		printf("fork right = %d\n", data.lst_philo[i].fork_right);
+		printf("state = %d\n", data.lst_philo[i].state);
+		printf("------------------------\n");
+	}
+	printf ("\n====== Debug ======\n");
 }
