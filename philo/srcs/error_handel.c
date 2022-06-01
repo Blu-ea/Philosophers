@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 15:00:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/31 18:13:34 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/01 15:59:03 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	ft_error(int err, t_philo *data, int place)
 		printf ("Error : Malloc failed\n");
 	if (err == MUTEX_ERROR)
 		ft_error_mutex(data, place);
-	if (err == MUTEX_ERROR_2)
-		ft_error_mutex2(data, place);
 	if (err == THREAD_ERROR)
 		ft_error_thread(data, place);
 	if (err >= MALLOC_ERROR_2)
@@ -29,12 +27,6 @@ int	ft_error(int err, t_philo *data, int place)
 	if (err > MALLOC_ERROR_2)
 		free (data->mutex);
 	return (err);
-}
-
-void	ft_error_mutex2(t_philo *data, int place)
-{
-	pthread_mutex_destroy(&data->dead);
-	ft_error_mutex(data, place);
 }
 
 void	ft_error_mutex(t_philo *data, int place)

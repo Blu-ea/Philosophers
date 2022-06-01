@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/31 18:24:35 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:05:30 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 
 # define DEAD 0
+# define ALIVE 1
 # define THINKING 2
 # define EATING 3
 # define SLEEPING 4
@@ -40,6 +41,7 @@ typedef struct s_lst_ph
 	t_philo			*data;
 	pthread_t		thread;
 	int				state;
+	int				alive;
 	int				eat;
 	struct timeval	last_eat;
 }	t_lst_ph;
@@ -55,7 +57,6 @@ typedef struct s_philo
 	struct timeval	current;
 	t_lst_ph		*lst_philo;
 	pthread_mutex_t	*mutex;
-	pthread_mutex_t	dead;
 	u_int64_t		time;
 }		t_philo;
 
@@ -64,7 +65,6 @@ typedef struct s_philo
 // int		main(int argc, char **argv);
 int			ft_init_philo(t_philo *data);
 int			ft_init_threads(t_philo *data);
-int			check_dead(t_philo *data);
 void		ft_leave(t_philo *data);
 void		ft_kill_all(t_philo *data);
 
@@ -80,13 +80,14 @@ void		*ft_simul(void *philo);
 void		ft_eat(t_lst_ph *philo, t_philo *data);
 void		ft_sleep(t_lst_ph *philo, t_philo *data);
 void		ft_print_act(t_philo *data, t_lst_ph *ph, char *str);
+int			check_dead(t_philo *data);
+int			ft_test_dead(t_philo *data);
 
 //////// error_handler.c ////////
 
 int			ft_error(int err, t_philo *data, int place);
 void		ft_error_mutex(t_philo *data, int place);
 void		ft_error_thread(t_philo *data, int place);
-void	ft_error_mutex2(t_philo *data, int place);
 
 //////////// time.c ////////////
 

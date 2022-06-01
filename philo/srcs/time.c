@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:09:29 by amiguez           #+#    #+#             */
-/*   Updated: 2022/05/31 17:51:41 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:10:49 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ void	calc_last_eat(t_lst_ph *ph, t_philo *data)
 		+ (ph->last_eat.tv_usec / (u_int64_t) 1000);
 	current = (time.tv_sec * (u_int64_t) 1000)
 		+ (time.tv_usec / (u_int64_t) 1000);
-	if (current - start > data->time_to_die)
-		ph->state = DEAD;
+	if (current - start > (u_int64_t) data->time_to_die)
+	{
+		// printf ("last eat kill philo %d\n", ph->id);
+		ph->alive = DEAD;
+		// ft_print_act(data, ph, "has died");
+		// printf("%d %d has died\n", ft_get_time(*data), ph->id);
+	}
+	// printf("=== %d ===\n", ph->id);
+	// printf ("current = %d\n", current);
+	// printf ("start = %d\n", start);
+	// printf ("curent - start = %d\n", current - start);
 }
