@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:23:09 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 16:57:47 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/04 19:40:47 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*ft_simul(void *arg)
 			ph_sleep(ph, data);
 		i++;
 	}
-	pthread_exit(NULL);
+	return (0);
 }
 
 void	ph_eat(t_lst_ph *ph, t_philo *data)

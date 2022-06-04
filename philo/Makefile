@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/06/04 17:54:37 by amiguez          ###   ########.fr        #
+#    Updated: 2022/06/04 18:28:14 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,4 +82,4 @@ fclean	:
 re : fclean all
 
 .PHONY	: all clean fclean re $(LIBFT)
-.SILENT	:
+# .SILENT	:

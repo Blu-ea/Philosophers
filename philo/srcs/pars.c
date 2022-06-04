@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:46:37 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 18:11:35 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/04 18:19:46 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_pars(int argc, char **argv, t_philo *data)
 		data->nb_must_eat = ft_atoi(argv[5]);
 	else
 		data->nb_must_eat = -1;
-	printf ("je suis la \n");
 	if (ft_check_values(data, argv, argc))
 		return (WRONG_ARGS);
 	data->lst_philo = malloc(sizeof (t_philo) * data->nb_philo);

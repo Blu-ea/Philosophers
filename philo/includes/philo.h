@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 18:02:30 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/04 19:08:55 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_philo
 // int	main(int argc, char **argv);
 int		ft_error(int err_code, t_philo *data, int place);
 void	kill_all(t_philo *data);
+int		check_death(t_philo *data);
 
 //      pars.c      //
 
@@ -74,6 +75,7 @@ int		ft_check_values(t_philo *data, char **argv, int argc);
 //      init.c      //
 
 int		ft_mutex_init(t_philo *data);
+void	ft_thread_init(t_philo *data);
 
 //      simul.c     //
 
