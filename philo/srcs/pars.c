@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:46:37 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 17:37:11 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/04 18:11:35 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_pars(int argc, char **argv, t_philo *data)
 	else
 		data->nb_must_eat = -1;
 	printf ("je suis la \n");
-	if (ft_check_values(data, argv))
+	if (ft_check_values(data, argv, argc))
 		return (WRONG_ARGS);
 	data->lst_philo = malloc(sizeof (t_philo) * data->nb_philo);
 	if (data->lst_philo == NULL)
@@ -36,32 +36,29 @@ int	ft_pars(int argc, char **argv, t_philo *data)
 	return (0);
 }
 
-int	ft_check_values(t_philo *data, char **argv)
+int	ft_check_values(t_philo *data, char **argv, int argc)
 {
-	if (data->nb_philo <= 0 && ft_is_all_digit(argv[1]))
+	if (data->nb_philo <= 0)
 		return (1);
-	if (data->time_to_die < 0 && ft_is_all_digit(argv[2]))
+	if (data->time_to_die < 0)
 		return (1);
-	if (data->time_to_eat < 0 && ft_is_all_digit(argv[3]))
+	if (data->time_to_eat < 0)
 		return (1);
-	if (data->time_to_sleep < 0 && ft_is_all_digit(argv[4]))
+	if (data->time_to_sleep < 0)
 		return (1);
-	if (data->nb_must_eat == -1 || (ft_is_all_digit(argv[5])
-	&& data->nb_must_eat >= 0))
-		return (0);
-	return (1);
-}
-
-int	ft_is_all_digit(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (!ft_isdigit(arg[i]) || (arg[i] == '-' && i == 0))
-			return (0);
-		i++;
-	}
-	return (1);
+	if (argc == 6)
+		if (data->nb_must_eat < 0)
+			return (1);
+	if (!ft_is_all_digit(argv[1]))
+		return (1);
+	if (!ft_is_all_digit(argv[2]))
+		return (1);
+	if (!ft_is_all_digit(argv[3]))
+		return (1);
+	if (!ft_is_all_digit(argv[4]))
+		return (1);
+	if (argc == 6)
+		if (!ft_is_all_digit(argv[5]))
+			return (1);
+	return (0);
 }

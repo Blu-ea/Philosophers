@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 16:56:59 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/04 18:02:30 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	kill_all(t_philo *data);
 //      pars.c      //
 
 int		ft_pars(int argc, char **argv, t_philo *data);
-int		ft_check_values(t_philo *data, char **argv);
-int		ft_is_all_digit(char *arg);
+int		ft_check_values(t_philo *data, char **argv, int argc);
 
 //      init.c      //
 
