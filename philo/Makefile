@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/05/31 17:33:16 by amiguez          ###   ########.fr        #
+#    Updated: 2022/06/04 17:35:29 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@ NAME	:= philo
 # **************************************************************************** #
 LST_SRCS	:=	main.c\
 				pars.c\
-				error_handel.c\
 				time.c\
-				simulation.c
+				simul.c\
+				init.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
 LST_INCS	:= philo.h
 LST_LIB		:= libft.a
@@ -64,7 +64,7 @@ $(DIR_OBJ):
 	mkdir -p $(DIR_OBJ)
 
 $(LIBFT):
-	git submodule update $(DIR_LIB)
+	git submodule update --remote --rebase $(DIR_LIB)
 	printf "$(YELLOW)LIBFT IS UP TO DATE!\n$(END)$(RED)"
 	make -C $(DIR_LIB)
 
@@ -81,5 +81,5 @@ fclean	:
 
 re : fclean all
 
-.PHONY	: all clean fclean re
+.PHONY	: all clean fclean re $(LIBFT)
 # .SILENT	:

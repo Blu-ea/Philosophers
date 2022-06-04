@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:46:37 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 17:37:11 by amiguez          ###   ########.fr       */
+/*   Created: 2022/05/31 15:03:35 by amiguez           #+#    #+#             */
+/*   Updated: 2022/05/31 15:22:58 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,25 @@ int	ft_pars(int argc, char **argv, t_philo *data)
 		data->nb_must_eat = ft_atoi(argv[5]);
 	else
 		data->nb_must_eat = -1;
-	printf ("je suis la \n");
-	if (ft_check_values(data, argv))
+	if (ft_check_values(*data, argv))
 		return (WRONG_ARGS);
-	data->lst_philo = malloc(sizeof (t_philo) * data->nb_philo);
-	if (data->lst_philo == NULL)
-		return (MALLOC_ERROR);
-	data->mutex = malloc(sizeof (pthread_mutex_t) * data->nb_philo);
-	if (data->mutex == NULL)
-		return (MALLOC_ERROR_2);
 	return (0);
 }
 
-int	ft_check_values(t_philo *data, char **argv)
+int	ft_check_values(t_philo data, char **argv)
 {
-	if (data->nb_philo <= 0 && ft_is_all_digit(argv[1]))
+	if (data.nb_philo <= 0 || ft_is_all_digit(argv[1]))
 		return (1);
-	if (data->time_to_die < 0 && ft_is_all_digit(argv[2]))
+	if (data.time_to_die < 0 || ft_is_all_digit(argv[2]))
 		return (1);
-	if (data->time_to_eat < 0 && ft_is_all_digit(argv[3]))
+	if (data.time_to_eat < 0 || ft_is_all_digit(argv[3]))
 		return (1);
-	if (data->time_to_sleep < 0 && ft_is_all_digit(argv[4]))
+	if (data.time_to_sleep < 0 || ft_is_all_digit(argv[4]))
 		return (1);
-	if (data->nb_must_eat == -1 || (ft_is_all_digit(argv[5])
-	&& data->nb_must_eat >= 0))
-		return (0);
-	return (1);
+	if (data.nb_must_eat != -1)
+		if (data.nb_must_eat < 0 || ft_is_all_digit(argv[5]))
+			return (-1);
+	return (0);
 }
 
 int	ft_is_all_digit(char *arg)
@@ -59,9 +52,9 @@ int	ft_is_all_digit(char *arg)
 	i = 0;
 	while (arg[i])
 	{
-		if (!ft_isdigit(arg[i]) || (arg[i] == '-' && i == 0))
-			return (0);
+		if (!ft_isdigit(arg[i]))
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
