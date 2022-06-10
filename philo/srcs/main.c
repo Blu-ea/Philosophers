@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:45:25 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/04 19:38:24 by amiguez          ###   ########.fr       */
+/*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
+/*   Updated: 2022/06/10 19:55:05 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,68 @@
 
 int	main(int argc, char **argv)
 {
-	t_philo	data;
+	t_ph	data;
 	int		i;
 
 	i = ft_pars(argc, argv, &data);
 	if (i != 0)
-		return (ft_error(i, &data, 0));
-	i = ft_mutex_init(&data);
+		return (ft_error(i, NULL));
+	i = ft_init(&data);
 	if (i != 0)
-		return (ft_error(MUTEX_ERROR, &data, i));
-	ft_thread_init(&data);
-	i = 0;
-	gettimeofday(&data.start, NULL);
-	while (i < data.nb_philo)
-	{
-		data.lst_philo[i].data = &data;
-		if (pthread_create(&data.lst_philo[i].thread, NULL, ft_simul, &data.lst_philo[i]))
-			return (ft_error(THREAD_ERROR, &data, i));
-		i++;
-	}
-	while (check_death(&data))
+		return (ft_error(i, NULL));
+	i = ft_create_philo(&data);
+	if (i != 0)
+		return (ft_error(i, NULL));
+	return (0);
+	while (check_dead(&data))
 		;
 	kill_all(&data);
+	ft_exit(&data);
+}
+
+int	ft_init(t_ph *data)
+{
+	int		i;
+
+	i = 0;
+	data->lst_philo = malloc(sizeof(t_ph) * data->nb_philo);
+	if (data->lst_philo == NULL)
+		return (MALLOC_ERROR);
+	data->mutex = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
+	if (data->mutex == NULL)
+		return (MALLOC_ERROR_2);
+	while (i < data->nb_philo)
+	{
+		data->lst_philo[i].id = i;
+		data->lst_philo[i].fork_right = i;
+		data->lst_philo[i].fork_left = i + 1 % data->nb_philo;
+		data->lst_philo[i].data = data;
+		data->lst_philo[i].alive = ALIVE;
+		if (pthread_mutex_init(&data->mutex[i], NULL))
+			return (ft_error_mutex(i, data));
+		i++;
+	}
 	return (0);
 }
 
-int	ft_error(int err_code, t_philo *data, int place)
-{
-	if (err_code == WRONG_ARGS)
-		printf ("Error : Wrong arguments\n");
-	if (err_code == MALLOC_ERROR)
-		printf ("Error : Malloc error\n");
-	if (err_code == MALLOC_ERROR_2)
-		printf ("Error : Malloc error\n");
-	if (err_code == MUTEX_ERROR)
-	{
-		while (place--)
-			pthread_mutex_destroy(&data->mutex[place]);
-	}
-	if (err_code == THREAD_ERROR)
-	{
-		kill_all(data);
-		while (data->nb_philo--)
-			pthread_mutex_destroy(&data->mutex[place]);
-		while (place--)
-			pthread_join(data->lst_philo[place].thread, NULL);
-		printf ("Error : Thread error\n");
-	}
-	if (err_code <= MALLOC_ERROR_2)
-		free(data->lst_philo);
-	if (err_code <= MUTEX_ERROR)
-		free(data->mutex);
-	return (err_code);
-}
-
-void	kill_all(t_philo *data)
+int	ft_create_philo(t_ph *data)
 {
 	int	i;
 
 	i = 0;
-	printf ("\n========= KILL ALL ========\n\n");
+	while (i < data->nb_philo)
+	{
+		if (pthread_create(&data->lst_philo[i].thread, NULL,
+				ft_thread, &data->lst_philo[i]) != 0)
+			return (ft_error_thread(i, data));
+		i++;
+	}
+}
+
+void	kill_all(t_ph *data)
+{
+	int	i;
+
 	while (i < data->nb_philo)
 	{
 		data->lst_philo[i].alive = DEAD;
@@ -81,19 +83,31 @@ void	kill_all(t_philo *data)
 	}
 }
 
-/**
- * @brief will return 1 if someone is dead, 0 otherwise
- */
-int	check_death(t_philo *data)
+int	ft_check_dead(t_ph *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		if (data->lst_philo[i].alive == DEAD)
+		if (data->lst_philo[i].alive == ALIVE)
 			return (1);
 		i++;
 	}
+}
+
+int	ft_exit(t_ph *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		pthread_join(data->lst_philo[i].thread, NULL);
+		pthread_mutex_destroy(&data->mutex[i]);
+		i++;
+	}
+	free(data->lst_philo);
+	free(data->mutex);
 	return (0);
 }
