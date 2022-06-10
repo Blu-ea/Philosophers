@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/10 19:43:12 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:13:49 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define MALLOC_ERROR 3
 # define MALLOC_ERROR_2 4
 # define MUTEX_ERROR 5
+# define THREAD_ERROR 6
 
 typedef struct s_ph	t_ph;
 
@@ -36,10 +37,10 @@ typedef struct s_lst_ph
 	int				fork_right;
 	t_ph			*data;
 	int				alive;
-	pthread_t		thread;
-	int				state;
 	int				eat;
+	pthread_t		thread;
 	struct timeval	last_eat;
+	int				state;
 }	t_lst_ph;
 
 typedef struct s_ph
@@ -61,6 +62,8 @@ typedef struct s_ph
 // int	main(int argc, char **argv);
 int		ft_init(t_ph *data);
 int		ft_create_philo(t_ph *data);
+void	kill_all(t_ph *data);
+int		ft_exit(t_ph *data);
 
 //      pars.c      //
 
@@ -72,6 +75,10 @@ int		ft_check_values(char **argv);
 int		ft_error(int i, t_ph *data);
 int		ft_error_mutex(int i, t_ph *data);
 int		ft_error_thread(int i, t_ph *data);
+
+//      time.c      //
+
+int		check_dead(t_ph *data);
 
 //     thread.c      //
 

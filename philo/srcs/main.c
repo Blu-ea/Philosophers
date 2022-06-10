@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/10 19:55:05 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:15:58 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ int	main(int argc, char **argv)
 
 	i = ft_pars(argc, argv, &data);
 	if (i != 0)
-		return (ft_error(i, NULL));
+		return (ft_error(i, &data));
 	i = ft_init(&data);
 	if (i != 0)
-		return (ft_error(i, NULL));
+		return (ft_error(i, &data));
 	i = ft_create_philo(&data);
 	if (i != 0)
-		return (ft_error(i, NULL));
-	return (0);
-	while (check_dead(&data))
-		;
+		return (ft_error(i, &data));
+	
+	// while (check_dead(&data))
+	// 	;
+	sleep(2);
 	kill_all(&data);
 	ft_exit(&data);
 }
@@ -51,6 +52,7 @@ int	ft_init(t_ph *data)
 		data->lst_philo[i].fork_left = i + 1 % data->nb_philo;
 		data->lst_philo[i].data = data;
 		data->lst_philo[i].alive = ALIVE;
+		data->lst_philo[i].eat = data->nb_must_eat;
 		if (pthread_mutex_init(&data->mutex[i], NULL))
 			return (ft_error_mutex(i, data));
 		i++;
@@ -70,6 +72,7 @@ int	ft_create_philo(t_ph *data)
 			return (ft_error_thread(i, data));
 		i++;
 	}
+	return (0);
 }
 
 void	kill_all(t_ph *data)
@@ -83,18 +86,6 @@ void	kill_all(t_ph *data)
 	}
 }
 
-int	ft_check_dead(t_ph *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_philo)
-	{
-		if (data->lst_philo[i].alive == ALIVE)
-			return (1);
-		i++;
-	}
-}
 
 int	ft_exit(t_ph *data)
 {

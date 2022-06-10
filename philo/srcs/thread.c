@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/10 19:35:50 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:15:46 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,6 @@ void	*ft_thread(void *arg)
 
 	ph = (t_lst_ph *)arg;
 	data = ph->data;
+	printf ("if thread nb %d\n", ph->id);
+	return (0);
 }
