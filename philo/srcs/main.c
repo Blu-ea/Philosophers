@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/10 20:15:58 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/11 20:41:57 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ int	main(int argc, char **argv)
 	i = ft_create_philo(&data);
 	if (i != 0)
 		return (ft_error(i, &data));
-	
-	// while (check_dead(&data))
-	// 	;
-	sleep(2);
+	while (check_dead(&data))
+		;
+	printf ("KILL ALL ========");
 	kill_all(&data);
 	ft_exit(&data);
 }
@@ -65,11 +64,13 @@ int	ft_create_philo(t_ph *data)
 	int	i;
 
 	i = 0;
+	gettimeofday(&data->start, NULL);
 	while (i < data->nb_philo)
 	{
 		if (pthread_create(&data->lst_philo[i].thread, NULL,
 				ft_thread, &data->lst_philo[i]) != 0)
 			return (ft_error_thread(i, data));
+		gettimeofday(&data->lst_philo[i].last_eat, NULL);
 		i++;
 	}
 	return (0);
@@ -79,13 +80,13 @@ void	kill_all(t_ph *data)
 {
 	int	i;
 
+	i = 0;
 	while (i < data->nb_philo)
 	{
 		data->lst_philo[i].alive = DEAD;
 		i++;
 	}
 }
-
 
 int	ft_exit(t_ph *data)
 {
