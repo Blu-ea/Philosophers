@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 02:28:15 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 02:41:18 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_sleep(t_lst_ph *ph, t_ph *data)
 	if (ph->alive == ALIVE)
 		print_act(data, ph->id, "is sleeping\n", 0);
 	ft_usleep(data->time_to_sleep);
+	if (ph->alive == ALIVE)
+		print_act(data, ph->id, "is thinking\n", 0);
 }
 
 void	print_act(t_ph *data, int i, char *str, int pass)
