@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/11 20:33:05 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 02:23:31 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	check_dead(t_ph *data)
 	{
 		if (data->lst_philo[i].eat == 0)
 		{
-			print_act(data, i, " is dead\n");
+			print_act(data, i, "died\n", 1);
 			return (0);
 		}
 		calc_last_eat(data, i);
 		if (data->lst_philo[i].alive == DEAD)
 		{
-			print_act(data, i, " is dead\n");
+			print_act(data, i, "died\n", 1);
 			return (0);
 		}
 		i++;
@@ -45,7 +45,7 @@ void	calc_last_eat(t_ph *data, int i)
 	gettimeofday(&now, NULL);
 	time_diff = ((now.tv_sec - data->lst_philo[i].last_eat.tv_sec) * 1000
 			+ (now.tv_usec - data->lst_philo[i].last_eat.tv_usec) / 1000);
-	if (time_diff >= data->time_to_die)
+	if (time_diff > data->time_to_die)
 		data->lst_philo[i].alive = DEAD;
 }
 

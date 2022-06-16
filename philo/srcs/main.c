@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/11 20:41:57 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 02:37:17 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv)
 		return (ft_error(i, &data));
 	while (check_dead(&data))
 		;
-	printf ("KILL ALL ========");
 	kill_all(&data);
 	ft_exit(&data);
 }
@@ -48,7 +47,7 @@ int	ft_init(t_ph *data)
 	{
 		data->lst_philo[i].id = i;
 		data->lst_philo[i].fork_right = i;
-		data->lst_philo[i].fork_left = i + 1 % data->nb_philo;
+		data->lst_philo[i].fork_left = (i + 1) % data->nb_philo;
 		data->lst_philo[i].data = data;
 		data->lst_philo[i].alive = ALIVE;
 		data->lst_philo[i].eat = data->nb_must_eat;

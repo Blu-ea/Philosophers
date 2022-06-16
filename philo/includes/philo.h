@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/11 20:00:42 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 02:38:56 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ void		ft_usleep(u_int64_t time);
 void		*ft_thread(void *arg);
 void		ft_eat(t_lst_ph *ph, t_ph *data);
 void		ft_sleep(t_lst_ph *ph, t_ph *data);
-void		print_act(t_ph *data, int i, char *str);
+void		print_act(t_ph *data, int i, char *str, int pass);
 
 #endif
