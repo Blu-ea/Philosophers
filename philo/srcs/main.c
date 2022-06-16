@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 02:37:17 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 03:05:15 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ int	ft_exit(t_ph *data)
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		pthread_join(data->lst_philo[i].thread, NULL);
+		pthread_mutex_unlock(&data->mutex[i]);
 		pthread_mutex_destroy(&data->mutex[i]);
+		pthread_join(data->lst_philo[i].thread, NULL);
 		i++;
 	}
 	free(data->lst_philo);

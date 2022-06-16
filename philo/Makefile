@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/06/16 02:37:25 by amiguez          ###   ########.fr        #
+#    Updated: 2022/06/16 02:46:42 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,10 @@ UNDER	:=	\033[4m
 SUR		:=	\033[7m
 END		:=	\033[0m
 # **************************************************************************** #
+# **************************************************************************** #
+NORMITEST = 
+NORMINETTE = $(shell norminette $(SRCS) | grep -i 'Error')
+# **************************************************************************** #
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
 CC		:= gcc
@@ -56,6 +60,12 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(INCS) Makefile | $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+
+ifeq ($(NORMINETTE),$(NORMITEST))
+	printf "$(GREEN)Everything is ok\n$(END)"
+else
+	printf "$(RED)$(SUR)THERE IS AN ERROR WITH NORMINETTE IN PHILO FILES !!$(END)\n"
+endif
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(INCS) Makefile | $(DIR_OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@

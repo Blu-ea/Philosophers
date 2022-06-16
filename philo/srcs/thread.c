@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 02:41:18 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 03:05:43 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,26 @@ void	*ft_thread(void *arg)
 		usleep(50);
 	while (ph->alive == ALIVE)
 	{
+		printf (" boucle thread test\n");
 		if (ph->alive == ALIVE)
 			ft_eat(ph, data);
 		if (ph->alive == ALIVE)
 			ft_sleep(ph, data);
 	}
-	// printf ("%d is dead\n", ph->id);
+	printf ("exit\n");
 	return (0);
 }
 
 void	ft_eat(t_lst_ph *ph, t_ph *data)
 {
 	pthread_mutex_lock(&data->mutex[ph->fork_left]);
-	if (ph->alive == ALIVE)
-		print_act(data, ph->id, "has taken a fork\n", 0);
+	print_act(data, ph->id, "has taken a fork\n", 0);
 	pthread_mutex_lock(&data->mutex[ph->fork_right]);
-	if (ph->alive == ALIVE)
-		print_act(data, ph->id, "has taken a fork\n", 0);
-	if (ph->alive == ALIVE)
-		print_act(data, ph->id, "is eating\n", 0);
+	print_act(data, ph->id, "has taken a fork\n", 0);
+	print_act(data, ph->id, "is eating\n", 0);
 	gettimeofday(&ph->last_eat, NULL);
-	ft_usleep(data->time_to_eat);
+	if (ph->alive == ALIVE)
+		ft_usleep(data->time_to_eat);
 	pthread_mutex_unlock(&data->mutex[ph->fork_left]);
 	pthread_mutex_unlock(&data->mutex[ph->fork_right]);
 	if (ph->eat != -1)
@@ -52,11 +51,10 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 
 void	ft_sleep(t_lst_ph *ph, t_ph *data)
 {
+	print_act(data, ph->id, "is sleeping\n", 0);
 	if (ph->alive == ALIVE)
-		print_act(data, ph->id, "is sleeping\n", 0);
-	ft_usleep(data->time_to_sleep);
-	if (ph->alive == ALIVE)
-		print_act(data, ph->id, "is thinking\n", 0);
+		ft_usleep(data->time_to_sleep);
+	print_act(data, ph->id, "is thinking\n", 0);
 }
 
 void	print_act(t_ph *data, int i, char *str, int pass)
