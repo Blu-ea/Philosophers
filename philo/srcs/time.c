@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 02:23:31 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 03:26:22 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ int	check_dead(t_ph *data)
 {
 	int				i;
 	struct timeval	now;
+	int				eat;
 
 	gettimeofday(&now, NULL);
 	i = 0;
+	eat = 1;
 	while (i < data->nb_philo)
 	{
-		if (data->lst_philo[i].eat == 0)
-		{
-			print_act(data, i, "died\n", 1);
-			return (0);
-		}
+		if (data->lst_philo[i].eat != 0)
+			eat = 0;
 		calc_last_eat(data, i);
 		if (data->lst_philo[i].alive == DEAD)
 		{
@@ -34,6 +33,8 @@ int	check_dead(t_ph *data)
 		}
 		i++;
 	}
+	if (eat == 1)
+		return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 03:05:15 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 03:42:51 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,15 @@ int	ft_exit(t_ph *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->nb_philo)
+	i = -1;
+	while (++i < data->nb_philo)
 	{
 		pthread_mutex_unlock(&data->mutex[i]);
 		pthread_mutex_destroy(&data->mutex[i]);
-		pthread_join(data->lst_philo[i].thread, NULL);
-		i++;
 	}
+	i = -1;
+	while (i++ < data->nb_philo)
+		pthread_join(data->lst_philo[i].thread, NULL);
 	free(data->lst_philo);
 	free(data->mutex);
 	return (0);

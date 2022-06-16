@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 03:05:43 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/16 03:25:58 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ void	*ft_thread(void *arg)
 		usleep(50);
 	while (ph->alive == ALIVE)
 	{
-		printf (" boucle thread test\n");
 		if (ph->alive == ALIVE)
 			ft_eat(ph, data);
 		if (ph->alive == ALIVE)
 			ft_sleep(ph, data);
 	}
-	printf ("exit\n");
 	return (0);
 }
 
@@ -45,7 +43,7 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 		ft_usleep(data->time_to_eat);
 	pthread_mutex_unlock(&data->mutex[ph->fork_left]);
 	pthread_mutex_unlock(&data->mutex[ph->fork_right]);
-	if (ph->eat != -1)
+	if (ph->eat != -1 && ph->eat != 0)
 		ph->eat--;
 }
 
