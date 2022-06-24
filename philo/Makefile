@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/06/16 02:46:42 by amiguez          ###   ########.fr        #
+#    Updated: 2022/06/24 14:47:11 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:= philo
 # **************************************************************************** #
 LST_SRCS	:=	main.c\
 				pars.c\
-				error.c\
+				err.c\
 				thread.c\
 				time.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
@@ -52,7 +52,7 @@ NORMINETTE = $(shell norminette $(SRCS) | grep -i 'Error')
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
 CC		:= gcc
-CFLAGS	:= #-Wall -Werror -Wextra
+CFLAGS	:= -Wall -Werror -Wextra
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
@@ -60,6 +60,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(INCS) Makefile | $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	printf "$(ERASE)$(WHITE)Compiling $(NAME) : $(GREEN) Done $(END)\n"
 
 ifeq ($(NORMINETTE),$(NORMITEST))
 	printf "$(GREEN)Everything is ok\n$(END)"
@@ -69,13 +70,14 @@ endif
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(INCS) Makefile | $(DIR_OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
+	printf "$(ERASE)$(WHITE)Compiling $(NAME) : $(GREEN) $< $(END)$(ERROR)"
 
 $(DIR_OBJ):
 	mkdir -p $(DIR_OBJ)
 
 $(LIBFT):
 	git submodule update --remote --rebase $(DIR_LIB)
-	printf "$(YELLOW)LIBFT IS UP TO DATE!\n$(END)$(RED)"
+	printf "$(YELLOW)\nLIBFT IS UP TO DATE!\n$(END)$(RED)"
 	make -C $(DIR_LIB)
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
@@ -92,4 +94,4 @@ fclean	:
 re : fclean all
 
 .PHONY	: all clean fclean re $(LIBFT)
-# .SILENT	:
+.SILENT	:

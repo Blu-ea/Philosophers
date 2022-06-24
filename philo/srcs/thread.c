@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 03:25:58 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:00:29 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	*ft_thread(void *arg)
 
 	ph = (t_lst_ph *)arg;
 	data = ph->data;
+	print_act(data, ph->id, "is thinking\n", 0);
 	if (ph->id % 2 != 0)
 		usleep(50);
 	while (ph->alive == ALIVE)
@@ -37,8 +38,8 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 	print_act(data, ph->id, "has taken a fork\n", 0);
 	pthread_mutex_lock(&data->mutex[ph->fork_right]);
 	print_act(data, ph->id, "has taken a fork\n", 0);
-	print_act(data, ph->id, "is eating\n", 0);
 	gettimeofday(&ph->last_eat, NULL);
+	print_act(data, ph->id, "is eating\n", 0);
 	if (ph->alive == ALIVE)
 		ft_usleep(data->time_to_eat);
 	pthread_mutex_unlock(&data->mutex[ph->fork_left]);

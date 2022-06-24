@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 03:26:22 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/24 14:43:10 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	ft_usleep(u_int64_t time)
 	{
 		usleep(10);
 		gettimeofday(&now, NULL);
-		if (((now.tv_sec - current.tv_sec) * 1000
-				+ (now.tv_usec - current.tv_usec) / 1000) > time)
+		if ((u_int64_t)((now.tv_sec - current.tv_sec) * 1000
+			+ (now.tv_usec - current.tv_usec) / 1000) > time)
 			break ;
 	}
 }

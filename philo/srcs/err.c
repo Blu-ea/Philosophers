@@ -6,13 +6,13 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:38:30 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/10 19:42:19 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/06/24 14:43:38 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_error(int i,t_ph *data)
+int	ft_error(int i, t_ph *data)
 {
 	if (i == WRONG_ARGS || i == WRONG_ARGS_2)
 		ft_putendl_fd("Wrong arguments", 2);
