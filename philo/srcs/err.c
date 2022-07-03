@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   err.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:38:30 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/24 14:43:38 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/07/03 06:05:45 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	ft_error(int i, t_ph *data)
 		ft_putendl_fd("Malloc error", 2);
 	if (i > MALLOC_ERROR_2)
 		free(data->mutex);
+	if (i >= ERROR_PRINT)
+	{
+		pthread_mutex_destroy(&data->print);
+		ft_putendl_fd("Error mutex print", 2);
+	}
 	if (i == MUTEX_ERROR)
 		ft_putendl_fd("Mutex error", 2);
 	return (i);

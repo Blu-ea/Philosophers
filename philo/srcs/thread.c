@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/24 15:00:29 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/07/03 07:15:13 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void	print_act(t_ph *data, int i, char *str, int pass)
 {
 	u_int64_t	time;
 
+	pthread_mutex_lock(&data->print);
 	time = get_time(data);
 	if (data->lst_philo[i].alive == ALIVE || pass == 1)
 		printf("%llu %d %s", time, i, str);
+	pthread_mutex_unlock(&data->print);
 }

@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 03:42:51 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/07/03 06:35:16 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv)
 		return (ft_error(i, &data));
 	while (check_dead(&data))
 		;
+	pthread_mutex_lock(&data.print);
 	kill_all(&data);
 	ft_exit(&data);
 }
@@ -43,6 +44,8 @@ int	ft_init(t_ph *data)
 	data->mutex = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (data->mutex == NULL)
 		return (MALLOC_ERROR_2);
+	if (pthread_mutex_init(&data->print, NULL))
+		return (ft_error_mutex(ERROR_PRINT, data));
 	while (i < data->nb_philo)
 	{
 		data->lst_philo[i].id = i;
@@ -85,6 +88,8 @@ void	kill_all(t_ph *data)
 		data->lst_philo[i].alive = DEAD;
 		i++;
 	}
+	pthread_mutex_unlock(&data->print);
+	pthread_mutex_destroy(&data->print);
 }
 
 int	ft_exit(t_ph *data)

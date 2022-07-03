@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:24:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/10 19:00:17 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/07/03 06:07:02 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_check_values(char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		if (!ft_is_all_digit(argv[i]))
+		if (!ft_isall_digit(argv[i]))
 			return (1);
 		i++;
 	}
