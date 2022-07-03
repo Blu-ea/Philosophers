@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/06/16 05:43:32 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/07/03 06:03:54 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 # define WRONG_ARGS_2 2
 # define MALLOC_ERROR 3
 # define MALLOC_ERROR_2 4
-# define MUTEX_ERROR 5
-# define THREAD_ERROR 6
+# define ERROR_PRINT 5
+# define MUTEX_ERROR 6
+# define THREAD_ERROR 7
 
 typedef struct s_ph	t_ph;
 
@@ -53,6 +54,7 @@ typedef struct s_ph
 	struct timeval	current;
 	t_lst_ph		*lst_philo;
 	pthread_mutex_t	*mutex;
+	pthread_mutex_t	print;
 }		t_ph;
 
 //==================//
