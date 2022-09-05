@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/07/03 07:15:13 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:31:01 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_thread(void *arg)
 	data = ph->data;
 	print_act(data, ph->id, "is thinking\n", 0);
 	if (ph->id % 2 != 0)
-		usleep(50);
+		ft_usleep(50);
 	while (ph->alive == ALIVE)
 	{
 		if (ph->alive == ALIVE)

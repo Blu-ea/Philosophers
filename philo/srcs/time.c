@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/07/03 06:30:33 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:31:31 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	check_dead(t_ph *data)
 	eat = 1;
 	while (i < data->nb_philo)
 	{
+		pthread_mutex_lock(&data->alive);
 		if (data->lst_philo[i].eat != 0)
 			eat = 0;
+		pthread_mutex_unlock(&data->alive);
 		calc_last_eat(data, i);
 		if (data->lst_philo[i].alive == DEAD)
 		{
@@ -52,13 +54,14 @@ void	calc_last_eat(t_ph *data, int i)
 
 u_int64_t	get_time(t_ph *data)
 {
-	u_int64_t	start;
-	u_int64_t	current;
+	u_int64_t		start;
+	u_int64_t		current;
+	struct timeval	now;
 
-	gettimeofday(&data->current, NULL);
+	gettimeofday(&now, NULL);
 	start = (u_int64_t) data->start.tv_sec * 1000 + data->start.tv_usec / 1000;
-	current = (u_int64_t) data->current.tv_sec * 1000
-		+ data->current.tv_usec / 1000;
+	current = (u_int64_t) now.tv_sec * 1000
+		+ now.tv_usec / 1000;
 	return (current - start);
 }
 
@@ -71,7 +74,6 @@ void	ft_usleep(u_int64_t time)
 	current = now;
 	while (1)
 	{
-		usleep(10);
 		gettimeofday(&now, NULL);
 		if ((u_int64_t)((now.tv_sec - current.tv_sec) * 1000
 			+ (now.tv_usec - current.tv_usec) / 1000) > time)
