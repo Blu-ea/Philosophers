@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 18:50:29 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 18:54:27 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 	//pthread_mutex_unlock(&data->kill_all);
 	pthread_mutex_unlock(&data->mutex[ph->fork_left]);
 	pthread_mutex_unlock(&data->mutex[ph->fork_right]);
-	//pthread_mutex_lock(&data->end);
+	pthread_mutex_lock(&data->end);
 	if (ph->eat != -1 && ph->eat != 0)
 		ph->eat--;
-	//pthread_mutex_unlock(&data->end);
+	pthread_mutex_unlock(&data->end);
 }
 
 void	ft_sleep(t_lst_ph *ph, t_ph *data)

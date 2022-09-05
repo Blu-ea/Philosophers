@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 18:50:50 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 18:53:37 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	ft_init(t_ph *data)
 		if (pthread_mutex_init(&data->mutex[i], NULL))
 			return (ft_error_mutex(i, data));
 	}
-	//if (pthread_mutex_init(&data->end, NULL))
-	//	return (ft_error_mutex(i, data));
+	if (pthread_mutex_init(&data->end, NULL))
+		return (ft_error_mutex(i, data));
 	//if (pthread_mutex_init(&data->kill_all, NULL))
 	//	return (ft_error_mutex(i, data));
 	return (0);
@@ -94,8 +94,8 @@ void	kill_all(t_ph *data)
 	}
 	pthread_mutex_unlock(&data->print);
 	pthread_mutex_destroy(&data->print);
-//	pthread_mutex_unlock(&data->end);
-//	pthread_mutex_destroy(&data->end);
+	pthread_mutex_unlock(&data->end);
+	pthread_mutex_destroy(&data->end);
 //	pthread_mutex_unlock(&data->kill_all);
 //	pthread_mutex_destroy(&data->kill_all);
 }

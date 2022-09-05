@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 18:50:17 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 18:54:13 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	check_dead(t_ph *data)
 	eat = 1;
 	while (i < data->nb_philo)
 	{
-		//pthread_mutex_lock(&data->end);
+		pthread_mutex_lock(&data->end);
 		if (data->lst_philo[i].eat != 0)
 			eat = 0;
-		//pthread_mutex_unlock(&data->end);
+		pthread_mutex_unlock(&data->end);
 		calc_last_eat(data, i);
 		if (data->lst_philo[i].alive == DEAD)
 		{
