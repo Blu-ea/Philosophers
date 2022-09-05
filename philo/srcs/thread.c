@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 15:31:01 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 18:50:29 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,16 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 	print_act(data, ph->id, "has taken a fork\n", 0);
 	gettimeofday(&ph->last_eat, NULL);
 	print_act(data, ph->id, "is eating\n", 0);
+	//pthread_mutex_lock(&data->kill_all);
 	if (ph->alive == ALIVE)
 		ft_usleep(data->time_to_eat);
+	//pthread_mutex_unlock(&data->kill_all);
 	pthread_mutex_unlock(&data->mutex[ph->fork_left]);
 	pthread_mutex_unlock(&data->mutex[ph->fork_right]);
+	//pthread_mutex_lock(&data->end);
 	if (ph->eat != -1 && ph->eat != 0)
 		ph->eat--;
+	//pthread_mutex_unlock(&data->end);
 }
 
 void	ft_sleep(t_lst_ph *ph, t_ph *data)
@@ -62,7 +66,9 @@ void	print_act(t_ph *data, int i, char *str, int pass)
 
 	pthread_mutex_lock(&data->print);
 	time = get_time(data);
+	//pthread_mutex_lock(&data->kill_all);
 	if (data->lst_philo[i].alive == ALIVE || pass == 1)
 		printf("%llu %d %s", time, i, str);
+	//pthread_mutex_unlock(&data->kill_all);
 	pthread_mutex_unlock(&data->print);
 }

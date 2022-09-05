@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/07/03 06:35:16 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 18:50:50 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv)
 		return (ft_error(i, &data));
 	while (check_dead(&data))
 		;
+	pthread_mutex_lock(&data.kill_all);
 	pthread_mutex_lock(&data.print);
 	kill_all(&data);
 	ft_exit(&data);
@@ -37,7 +38,7 @@ int	ft_init(t_ph *data)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	data->lst_philo = malloc(sizeof(t_ph) * data->nb_philo);
 	if (data->lst_philo == NULL)
 		return (MALLOC_ERROR);
@@ -46,7 +47,7 @@ int	ft_init(t_ph *data)
 		return (MALLOC_ERROR_2);
 	if (pthread_mutex_init(&data->print, NULL))
 		return (ft_error_mutex(ERROR_PRINT, data));
-	while (i < data->nb_philo)
+	while (++i < data->nb_philo)
 	{
 		data->lst_philo[i].id = i;
 		data->lst_philo[i].fork_right = i;
@@ -56,8 +57,11 @@ int	ft_init(t_ph *data)
 		data->lst_philo[i].eat = data->nb_must_eat;
 		if (pthread_mutex_init(&data->mutex[i], NULL))
 			return (ft_error_mutex(i, data));
-		i++;
 	}
+	//if (pthread_mutex_init(&data->end, NULL))
+	//	return (ft_error_mutex(i, data));
+	//if (pthread_mutex_init(&data->kill_all, NULL))
+	//	return (ft_error_mutex(i, data));
 	return (0);
 }
 
@@ -90,6 +94,10 @@ void	kill_all(t_ph *data)
 	}
 	pthread_mutex_unlock(&data->print);
 	pthread_mutex_destroy(&data->print);
+//	pthread_mutex_unlock(&data->end);
+//	pthread_mutex_destroy(&data->end);
+//	pthread_mutex_unlock(&data->kill_all);
+//	pthread_mutex_destroy(&data->kill_all);
 }
 
 int	ft_exit(t_ph *data)

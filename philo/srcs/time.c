@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 15:32:56 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 18:50:17 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	check_dead(t_ph *data)
 	eat = 1;
 	while (i < data->nb_philo)
 	{
+		//pthread_mutex_lock(&data->end);
 		if (data->lst_philo[i].eat != 0)
 			eat = 0;
+		//pthread_mutex_unlock(&data->end);
 		calc_last_eat(data, i);
 		if (data->lst_philo[i].alive == DEAD)
 		{
@@ -72,6 +74,7 @@ void	ft_usleep(u_int64_t time)
 	current = now;
 	while (1)
 	{
+		usleep(10);
 		gettimeofday(&now, NULL);
 		if ((u_int64_t)((now.tv_sec - current.tv_sec) * 1000
 			+ (now.tv_usec - current.tv_usec) / 1000) > time)

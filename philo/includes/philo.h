@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/07/03 06:03:54 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/05 16:43:52 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_ph
 	t_lst_ph		*lst_philo;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	print;
+	pthread_mutex_t	end;
+	pthread_mutex_t	kill_all;
 }		t_ph;
 
 //==================//
