@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/06/24 14:47:11 by amiguez          ###   ########.fr        #
+#    Updated: 2022/09/05 15:34:11 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,14 +51,15 @@ NORMINETTE = $(shell norminette $(SRCS) | grep -i 'Error')
 # **************************************************************************** #
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
-CC		:= gcc
-CFLAGS	:= -Wall -Werror -Wextra
+CC			:= gcc
+CFLAGS		:= -Wall -Werror -Wextra
+THREAD_DR	:= -fsanitize=thread
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(INCS) Makefile | $(LIBFT)
+$(NAME): $(LIBFT) | $(OBJS) $(INCS) Makefile 
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 	printf "$(ERASE)$(WHITE)Compiling $(NAME) : $(GREEN) Done $(END)\n"
 
@@ -76,7 +77,7 @@ $(DIR_OBJ):
 	mkdir -p $(DIR_OBJ)
 
 $(LIBFT):
-	git submodule update --remote --rebase $(DIR_LIB)
+	git submodule update --remote $(DIR_LIB)
 	printf "$(YELLOW)\nLIBFT IS UP TO DATE!\n$(END)$(RED)"
 	make -C $(DIR_LIB)
 
@@ -94,4 +95,4 @@ fclean	:
 re : fclean all
 
 .PHONY	: all clean fclean re $(LIBFT)
-.SILENT	:
+# .SILENT	:
