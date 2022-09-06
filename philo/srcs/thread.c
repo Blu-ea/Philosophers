@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:32:28 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 18:54:27 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 13:42:23 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*ft_thread(void *arg)
 		ft_usleep(50);
 	while (ph->alive == ALIVE)
 	{
+		printf ("test  === %d \n", ph->id);
 		if (ph->alive == ALIVE)
 			ft_eat(ph, data);
 		if (ph->alive == ALIVE)
@@ -38,12 +39,18 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 	print_act(data, ph->id, "has taken a fork\n", 0);
 	pthread_mutex_lock(&data->mutex[ph->fork_right]);
 	print_act(data, ph->id, "has taken a fork\n", 0);
+	pthread_mutex_lock(&data->last);
 	gettimeofday(&ph->last_eat, NULL);
+	pthread_mutex_unlock(&data->last);
 	print_act(data, ph->id, "is eating\n", 0);
-	//pthread_mutex_lock(&data->kill_all);
+	pthread_mutex_lock(&data->kill_all);
 	if (ph->alive == ALIVE)
+	{
+		pthread_mutex_unlock(&data->kill_all);
 		ft_usleep(data->time_to_eat);
-	//pthread_mutex_unlock(&data->kill_all);
+	}
+	else
+		pthread_mutex_unlock(&data->kill_all);
 	pthread_mutex_unlock(&data->mutex[ph->fork_left]);
 	pthread_mutex_unlock(&data->mutex[ph->fork_right]);
 	pthread_mutex_lock(&data->end);
@@ -55,8 +62,14 @@ void	ft_eat(t_lst_ph *ph, t_ph *data)
 void	ft_sleep(t_lst_ph *ph, t_ph *data)
 {
 	print_act(data, ph->id, "is sleeping\n", 0);
+	pthread_mutex_lock(&data->kill_all);
 	if (ph->alive == ALIVE)
+	{
+		pthread_mutex_unlock(&data->kill_all);
 		ft_usleep(data->time_to_sleep);
+	}
+	else
+		pthread_mutex_unlock(&data->kill_all);
 	print_act(data, ph->id, "is thinking\n", 0);
 }
 
@@ -66,9 +79,9 @@ void	print_act(t_ph *data, int i, char *str, int pass)
 
 	pthread_mutex_lock(&data->print);
 	time = get_time(data);
-	//pthread_mutex_lock(&data->kill_all);
+	pthread_mutex_lock(&data->kill_all);
 	if (data->lst_philo[i].alive == ALIVE || pass == 1)
 		printf("%llu %d %s", time, i, str);
-	//pthread_mutex_unlock(&data->kill_all);
+	pthread_mutex_unlock(&data->kill_all);
 	pthread_mutex_unlock(&data->print);
 }

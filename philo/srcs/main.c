@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:25:05 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 18:53:37 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 14:10:32 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv)
 		return (ft_error(i, &data));
 	while (check_dead(&data))
 		;
-	pthread_mutex_lock(&data.kill_all);
 	pthread_mutex_lock(&data.print);
 	kill_all(&data);
 	ft_exit(&data);
@@ -60,8 +59,10 @@ int	ft_init(t_ph *data)
 	}
 	if (pthread_mutex_init(&data->end, NULL))
 		return (ft_error_mutex(i, data));
-	//if (pthread_mutex_init(&data->kill_all, NULL))
-	//	return (ft_error_mutex(i, data));
+	if (pthread_mutex_init(&data->kill_all, NULL))
+		return (ft_error_mutex(i, data));
+	if (pthread_mutex_init(&data->last, NULL))
+		return (ft_error_mutex(i, data));
 	return (0);
 }
 
@@ -87,17 +88,22 @@ void	kill_all(t_ph *data)
 	int	i;
 
 	i = 0;
+	ft_printf ("KILL ALL ========== aaaa \n");
+	pthread_mutex_lock(&data->kill_all);
 	while (i < data->nb_philo)
 	{
 		data->lst_philo[i].alive = DEAD;
 		i++;
 	}
-	pthread_mutex_unlock(&data->print);
-	pthread_mutex_destroy(&data->print);
+	// while (data->)
 	pthread_mutex_unlock(&data->end);
 	pthread_mutex_destroy(&data->end);
-//	pthread_mutex_unlock(&data->kill_all);
-//	pthread_mutex_destroy(&data->kill_all);
+	pthread_mutex_unlock(&data->print);
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_unlock(&data->last);
+	pthread_mutex_destroy(&data->last);
+	pthread_mutex_unlock(&data->kill_all);
+	pthread_mutex_destroy(&data->kill_all);
 }
 
 int	ft_exit(t_ph *data)
@@ -107,12 +113,16 @@ int	ft_exit(t_ph *data)
 	i = -1;
 	while (++i < data->nb_philo)
 	{
+		printf ("test %d \n", i);
 		pthread_mutex_unlock(&data->mutex[i]);
 		pthread_mutex_destroy(&data->mutex[i]);
 	}
 	i = -1;
-	while (i++ < data->nb_philo)
+	while (++i < data->nb_philo)
+	{
+		printf ("test %d \n", i);
 		pthread_join(data->lst_philo[i].thread, NULL);
+	}
 	free(data->lst_philo);
 	free(data->mutex);
 	return (0);

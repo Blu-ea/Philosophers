@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   new_philo.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 16:53:42 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 16:53:10 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # define DEAD 0
 # define ALIVE 1
 
-# define WRONG_ARGS 1
-# define WRONG_ARGS_2 2
-# define MALLOC_ERROR 3
-# define MALLOC_ERROR_2 4
+# define __PASS 0
+# define __NO_ARG 1
+# define __WRONG_ARG 2
+# define __PC_ERROR 3
 # define ERROR_PRINT 5
 # define MUTEX_ERROR 6
 # define THREAD_ERROR 7
@@ -52,45 +52,6 @@ typedef struct s_ph
 	struct timeval	start;
 	struct timeval	current;
 	t_lst_ph		*lst_philo;
-	pthread_mutex_t	*mutex; // all get unlock and destroy
-	pthread_mutex_t	print; //get unlock then destroy
-	pthread_mutex_t	end; //get unlock then destroy
-	pthread_mutex_t	kill_all; // get unlock then destroy
-	pthread_mutex_t	last; // get unlock then destroy
 }		t_ph;
 
-//==================//
-//      main.c      //
-
-// int		main(int argc, char **argv);
-int			ft_init(t_ph *data);
-int			ft_create_philo(t_ph *data);
-void		kill_all(t_ph *data);
-int			ft_exit(t_ph *data);
-
-//      pars.c      //
-
-int			ft_pars(int argc, char **argv, t_ph *data);
-int			ft_check_values(char **argv);
-
-//      error.c      //
-
-int			ft_error(int i, t_ph *data);
-int			ft_error_mutex(int i, t_ph *data);
-int			ft_error_thread(int i, t_ph *data);
-
-//      time.c      //
-
-int			check_dead(t_ph *data);
-void		calc_last_eat(t_ph *data, int i);
-u_int64_t	get_time(t_ph *data);
-void		ft_usleep(u_int64_t time);
-
-//     thread.c      //
-
-void		*ft_thread(void *arg);
-void		ft_eat(t_lst_ph *ph, t_ph *data);
-void		ft_sleep(t_lst_ph *ph, t_ph *data);
-void		print_act(t_ph *data, int i, char *str, int pass);
-
-#endif
+int main()

@@ -1,6 +1,0 @@
-[submodule "philo/libft"]
-	path = philo/libft
-	url = https://github.com/Blue-bg/libft.git
-[submodule "philo_bonus/libft"]
-	path = philo_bonus/libft
-	url = https://github.com/Blue-bg/libft.git

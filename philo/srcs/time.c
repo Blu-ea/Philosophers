@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:55:58 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/05 18:54:13 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 14:06:29 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,16 @@ int	check_dead(t_ph *data)
 			eat = 0;
 		pthread_mutex_unlock(&data->end);
 		calc_last_eat(data, i);
-		if (data->lst_philo[i].alive == DEAD)
+	//	printf ("time test je suis la %d \n", i);
+		pthread_mutex_lock(&data->kill_all);
+	//	printf ("time test je ne suis plus la suis la %d \n", data->lst_philo[i].alive);
+		if (data->lst_philo[i].alive == DEAD) 
 		{
+			printf("AAAAAAAAAAAAA");
 			print_act(data, i, "died\n", 1);
 			return (0);
 		}
+		pthread_mutex_unlock(&data->kill_all);
 		i++;
 	}
 	if (eat == 1)
@@ -46,10 +51,14 @@ void	calc_last_eat(t_ph *data, int i)
 	int				time_diff;
 
 	gettimeofday(&now, NULL);
+	pthread_mutex_lock(&data->last);
+	pthread_mutex_lock(&data->kill_all);
 	time_diff = ((now.tv_sec - data->lst_philo[i].last_eat.tv_sec) * 1000
 			+ (now.tv_usec - data->lst_philo[i].last_eat.tv_usec) / 1000);
 	if (time_diff > data->time_to_die)
 		data->lst_philo[i].alive = DEAD;
+	pthread_mutex_unlock(&data->kill_all);
+	pthread_mutex_unlock(&data->last);
 }
 
 u_int64_t	get_time(t_ph *data)
