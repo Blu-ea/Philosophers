@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 16:20:03 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 17:45:08 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 20:57:41 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	parsing(char **argv)
 			return (EXIT_FAILURE);
 		i++;
 	}
-	printf ("pass\n");
 	if (ft_atoi(argv[1]) == 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

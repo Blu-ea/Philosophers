@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:48:35 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 19:34:23 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 20:55:57 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ int	init_data(int argc, char **argv, t_ph *data)
 			return (ft_error(__FORK, data));
 		data->i++;
 	}
+	if (init_mutex(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+int	init_mutex(t_ph *data)
+{
+	if (pthread_mutex_init(&data->state_check, NULL))
+		return (ft_error(__CHECK1, data));
+	if (pthread_mutex_init(&data->eat_check, NULL))
+		return (ft_error(__CHECK2, data));
+	if (pthread_mutex_init(&data->last_eat_check, NULL))
+		return (ft_error(__CHECK3, data));
+	if (pthread_mutex_init(&data->print, NULL))
+		return (ft_error(__CHECK4, data));
 	return (EXIT_SUCCESS);
 }
 

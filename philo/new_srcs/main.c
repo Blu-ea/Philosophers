@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:39:56 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 19:51:54 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/06 20:55:29 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,20 @@ int	main(int argc, char **argv)
 		return (ft_error(__WRONG_ARG, &data));
 	if (init(argc, argv, &data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	launch(&data);
+	if (launch(&data) == EXIT_FAILURE)
+		return (ft_error(__PTHREAD, &data));
 	return (0);
 }
 
-void	launch(t_ph *data)
+int	launch(t_ph *data)
 {
+	data->i = 0;
+	while (data->i < data->nb_philo)
+	{
+		if (pthread_create(&data->philo[data->i].thread, NULL,
+				routine, &data->philo[data->i]))
+			return (ft_error(__PTHREAD, data));
+		data->i++;
+	}
+	return (EXIT_SUCCESS);
 }

@@ -6,17 +6,17 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/09/06 16:53:05 by amiguez          ###   ########.fr        #
+#    Updated: 2022/09/06 19:21:07 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= philo
 # **************************************************************************** #
-LST_SRCS	:=	err.c main.c pars.c thread.c time.c
+LST_SRCS	:=	main.c parsing.c error.c init.c debug.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
 LST_INCS	:= philo.h
 # **************************************************************************** #
-DIR_SRC	:= srcs
+DIR_SRC	:= new_srcs
 DIR_OBJ	:= .objs
 DIR_INC	:= includes
 # **************************************************************************** #
