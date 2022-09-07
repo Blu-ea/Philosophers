@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:37:26 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 21:02:59 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/07 23:39:38 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_usleep(u_int64_t time)
 
 	gettimeofday(&now, NULL);
 	current = now;
-	while (1)
+	while (1)  //while alive ?? 
 	{
 		usleep(10);
 		gettimeofday(&now, NULL);
@@ -47,6 +47,7 @@ int	get_last_eat(t_lst_ph *philo, t_ph *data)
 	struct timeval	now;
 	int				time;
 
+	gettimeofday(&now, NULL);
 	pthread_mutex_lock(&data->last_eat_check);
 	time = (now.tv_sec - philo->last_eat.tv_sec) * 1000;
 	time += (now.tv_usec - philo->last_eat.tv_usec) / 1000;
