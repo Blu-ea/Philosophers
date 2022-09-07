@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:02:01 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 20:39:34 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/07 21:00:29 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*routine(void *temp)
 	state_print(philo, data, _THINK);
 	if (philo->id % 2 != 0)
 		(ft_usleep(100));
-	printf("LAUNCH %d\n", philo->id);
 	rout_loop(philo, data);
 	return (0);
 }
@@ -89,8 +88,8 @@ void	state_print(t_lst_ph *philo, t_ph *data, int action)
 	uint64_t	time;
 
 	time = get_time(data);
-	pthread_mutex_lock(&data->state_check);
 	pthread_mutex_lock(&data->print);
+	pthread_mutex_lock(&data->state_check);
 	if (philo->state == ALIVE)
 	{
 		pthread_mutex_unlock(&data->state_check);

@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:39:56 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 20:40:53 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/07 21:05:32 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	launch(t_ph *data)
 		if (pthread_create(&data->philo[data->i].thread, NULL,
 				routine, &data->philo[data->i]))
 			return (EXIT_FAILURE);
+		gettimeofday(&data->philo[data->i].last_eat, NULL);
 		data->i++;
 	}
 	return (EXIT_SUCCESS);
@@ -52,27 +53,29 @@ void	check_loop(t_ph *data)
 	lock = 1;
 	while (lock)
 	{
+		data->i = 1;
 		i = 0;
 		while (i < data->nb_philo && lock)
 		{
 			pthread_mutex_lock(&data->eat_check);
 			if (data->philo[i].eat != 0)
-				lock = 0;
+				data->i = 0;
 			pthread_mutex_unlock(&data->eat_check);
-			pthread_mutex_lock(&data->last_eat_check);
 			if (get_last_eat(&data->philo[i], data) >= data->t_die)
 			{
 				state_print(&data->philo[i], data, _DIED);
 				lock = 0;
 			}
-			pthread_mutex_unlock(&data->last_eat_check);
 			i++;
 		}
+		if (data->i == 1) 
+			lock = 0;
 	}
 }
 
 void	kill_all(t_ph *data, int i)
 {
+	printf ("KILL ALL ====== \n");
 	pthread_mutex_lock(&data->state_check);
 	while (i)
 	{
