@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:39:56 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 21:05:32 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/08 00:08:41 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv)
 	if (launch(&data) == EXIT_FAILURE)
 		return (ft_error(__PTHREAD, &data));
 	check_loop(&data);
-	pthread_mutex_lock(&data.state_check);
 	kill_all(&data, data.nb_philo);
 	return (0);
 }
@@ -68,19 +67,19 @@ void	check_loop(t_ph *data)
 			}
 			i++;
 		}
-		if (data->i == 1) 
+		if (data->i == 1)
 			lock = 0;
 	}
 }
 
 void	kill_all(t_ph *data, int i)
 {
-	printf ("KILL ALL ====== \n");
 	pthread_mutex_lock(&data->state_check);
 	while (i)
 	{
 		i--;
 		data->philo[i].state = DEAD;
+		pthread_mutex_unlock(&data->fork[i]);
 	}
 	pthread_mutex_unlock(&data->state_check);
 	while (i < data->nb_philo)
