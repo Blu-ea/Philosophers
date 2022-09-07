@@ -6,13 +6,13 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/09/06 19:21:07 by amiguez          ###   ########.fr        #
+#    Updated: 2022/09/06 20:56:54 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= philo
 # **************************************************************************** #
-LST_SRCS	:=	main.c parsing.c error.c init.c debug.c
+LST_SRCS	:=	main.c parsing.c error.c init.c debug.c routine.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
 LST_INCS	:= philo.h
 # **************************************************************************** #

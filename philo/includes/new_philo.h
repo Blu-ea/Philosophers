@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 20:59:09 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:32:18 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@
 
 # define __NO_ARG 1
 # define __WRONG_ARG 2
-# define __INIT_FAILED 3
-# define __MALLOC_FORK 4
-# define __FORK 5
-# define __CHECK1 6
-# define __CHECK2 7
-# define __CHECK3 8
-# define __CHECK4 9
-# define __MALLOC_PHILO 10 // not done
-# define __PTHREAD 11 //not done
+# define __MALLOC_FORK 3
+# define __FORK 4
+# define __CHECK1 5
+# define __CHECK2 6
+# define __CHECK3 7
+# define __CHECK4 8
+# define __MALLOC_PHILO 9
+# define __PTHREAD 10
 
 # define ALIVE 1
 # define DEAD 0
@@ -99,9 +98,10 @@ void	*routine(void*);
 /***************************/
 
 int		ft_error(int id, t_ph *data);
-void	usage(void);
 void	error_data(t_ph *data, int i, int id);
 void	error_mutex(t_ph *data, int id);
+void	error_malloc_philo(t_ph *data, int id);
+void	error_pthread(t_ph *data, int id);
 
 /** debug **/
 void	print_t_ph(t_ph data);

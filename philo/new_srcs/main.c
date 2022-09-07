@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:39:56 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 20:55:29 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/07 16:53:04 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	launch(t_ph *data)
 	{
 		if (pthread_create(&data->philo[data->i].thread, NULL,
 				routine, &data->philo[data->i]))
-			return (ft_error(__PTHREAD, data));
+			return (EXIT_FAILURE);
 		data->i++;
 	}
 	return (EXIT_SUCCESS);
