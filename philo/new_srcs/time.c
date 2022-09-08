@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:37:26 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 23:39:38 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/08 17:52:57 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,24 @@ u_int64_t	get_time(t_ph *data)
 	return (current - start);
 }
 
-void	ft_usleep(u_int64_t time)
+void	ft_usleep(u_int64_t time, t_ph *data, t_lst_ph *philo)
 {
 	struct timeval	now;
 	struct timeval	current;
 
 	gettimeofday(&now, NULL);
 	current = now;
-	while (1)  //while alive ?? 
+	pthread_mutex_lock(&data->state_check);
+	while (philo->state == ALIVE)
 	{
-		usleep(10);
+		pthread_mutex_unlock(&data->state_check);
 		gettimeofday(&now, NULL);
 		if ((u_int64_t)((now.tv_sec - current.tv_sec) * 1000
 			+ (now.tv_usec - current.tv_usec) / 1000) > time)
 			break ;
+		pthread_mutex_lock(&data->state_check);
 	}
+	pthread_mutex_unlock(&data->state_check);
 }
 
 int	get_last_eat(t_lst_ph *philo, t_ph *data)

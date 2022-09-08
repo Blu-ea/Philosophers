@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:02:01 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/08 00:08:10 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/08 17:53:34 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*routine(void *temp)
 	data = philo->data;
 	state_print(philo, data, _THINK);
 	if (philo->id % 2 != 0)
-		(ft_usleep(100));
+		(ft_usleep(100, data, philo));
 	rout_loop(philo, data);
 	return (0);
 }
@@ -61,7 +61,7 @@ void	ft_eat(t_lst_ph *philo, t_ph *data)
 		gettimeofday(&philo->last_eat, NULL);
 		pthread_mutex_unlock(&data->last_eat_check);
 		state_print(philo, data, _EAT);
-		ft_usleep(data->t_eat);
+		ft_usleep(data->t_eat, data, philo);
 	}
 	else
 		pthread_mutex_unlock(&data->state_check);
@@ -80,7 +80,7 @@ void	ft_sleep(t_lst_ph *philo, t_ph *data)
 	{
 		pthread_mutex_unlock(&data->state_check);
 		state_print(philo, data, _SLEEP);
-		ft_usleep(data->t_sleep);
+		ft_usleep(data->t_sleep, data, philo);
 	}
 	else
 		pthread_mutex_unlock(&data->state_check);

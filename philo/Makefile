@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/09/07 19:04:37 by amiguez          ###   ########.fr        #
+#    Updated: 2022/09/08 17:35:33 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:= philo
 # **************************************************************************** #
 LST_SRCS	:=	main.c parsing.c error.c init.c debug.c routine.c time.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
-LST_INCS	:= philo.h
+LST_INCS	:= new_philo.h
 # **************************************************************************** #
 DIR_SRC	:= new_srcs
 DIR_OBJ	:= .objs
@@ -46,9 +46,7 @@ NORMINETTE = $(shell norminette $(SRCS) | grep -i 'Error')
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
 CC		:= gcc
-CFLAGS	:= -Wall -Werror -Wextra -g3 
-
-#  -fsanitize=address  #
+CFLAGS	:= -Wall -Werror -Wextra -g3
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 

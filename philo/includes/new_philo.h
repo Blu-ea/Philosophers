@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 20:35:58 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/08 18:15:00 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void		state_print(t_lst_ph *philo, t_ph *data, int action);
 /***************************/
 
 u_int64_t	get_time(t_ph *data);
-void		ft_usleep(u_int64_t time);
+void		ft_usleep(u_int64_t time, t_ph *data, t_lst_ph *philo);
 int			get_last_eat(t_lst_ph *philo, t_ph *data);
 
 /***************************/
@@ -128,8 +128,5 @@ void		error_data(t_ph *data, int i, int id);
 void		error_mutex(t_ph *data, int id);
 void		error_malloc_philo(t_ph *data, int id);
 void		error_pthread(t_ph *data, int id);
-
-/** debug **/
-void		print_t_ph(t_ph data);
 
 #endif 
