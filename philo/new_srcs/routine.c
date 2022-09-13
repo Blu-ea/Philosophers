@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:02:01 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/08 17:53:34 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/13 13:52:46 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ void	state_print(t_lst_ph *philo, t_ph *data, int action)
 	{
 		pthread_mutex_unlock(&data->state_check);
 		if (action == _TAKE)
-			printf ("%llu %d %s\n", time, philo->id, _TAKEN_FORK);
+			printf ("%llu %d %s\n", time, philo->id + 1, _TAKEN_FORK);
 		if (action == _EAT)
-			printf ("%llu %d %s\n", time, philo->id, _EATING);
+			printf ("%llu %d %s\n", time, philo->id + 1, _EATING);
 		if (action == _SLEEP)
-			printf ("%llu %d %s\n", time, philo->id, _SLEEPING);
+			printf ("%llu %d %s\n", time, philo->id + 1, _SLEEPING);
 		if (action == _THINK)
-			printf ("%llu %d %s\n", time, philo->id, _THINKING);
+			printf ("%llu %d %s\n", time, philo->id + 1, _THINKING);
 	}
 	else
 		pthread_mutex_unlock(&data->state_check);
