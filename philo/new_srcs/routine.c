@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:02:01 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/23 08:03:56 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/26 15:00:06 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ void	state_print(t_lst_ph *philo, t_ph *data, int action)
 	time = get_time(data);
 	pthread_mutex_lock(&data->print);
 	pthread_mutex_lock(&data->state_check);
-	if (philo->state == ALIVE)
+	if (action == _DIED)
+		printf ("%llu %d %s\n", time, philo->id + 1, _DIING);
+	else if (philo->state == ALIVE)
 	{
 		pthread_mutex_unlock(&data->state_check);
 		if (action == _TAKE)
@@ -108,7 +110,5 @@ void	state_print(t_lst_ph *philo, t_ph *data, int action)
 	}
 	else
 		pthread_mutex_unlock(&data->state_check);
-	if (action == _DIED)
-		printf ("%llu %d %s\n", time, philo->id + 1, _DIING);
 	pthread_mutex_unlock(&data->print);
 }

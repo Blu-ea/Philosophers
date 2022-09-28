@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/09/08 19:20:18 by amiguez          ###   ########.fr        #
+#    Updated: 2022/09/28 16:12:05 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,11 @@ LST_SRCS	:=	main.c\
 				parsing.c\
 				error.c\
 				init.c\
-				routine.c\
-				time.c
+				sim.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
-LST_INCS	:= new_philo.h
+LST_INCS	:= test.h
 # **************************************************************************** #
-DIR_SRC	:= new_srcs
+DIR_SRC	:= new__test
 DIR_OBJ	:= .objs
 DIR_INC	:= includes
 # **************************************************************************** #
@@ -51,14 +50,14 @@ NORMINETTE = $(shell norminette $(SRCS) | grep -i 'Error:')
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
 CC		:= gcc
-CFLAGS	:= -Wall -Werror -Wextra -g3
+CFLAGS	:= -Wall -Werror -Wextra -g3 -fsanitize=thread
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\ #
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(INCS) Makefile 
-	$(CC) $(CFLAGS) -g3 $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	printf "$(ERASE)$(WHITE)Compiling $(NAME) : $(GREEN) Done $(END)\n"
 
 ifeq ($(NORMINETTE),$(NORMITEST))
