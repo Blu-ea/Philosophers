@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:39:56 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/28 18:13:09 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:09:25 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/test.h"
+#include "../includes/old_philo.h"
 
 int	main(int argc, char **argv)
 {
@@ -25,86 +25,77 @@ int	main(int argc, char **argv)
 	if (launch(&data) == EXIT_FAILURE)
 		return (ft_error(__PTHREAD, &data));
 	check_loop(&data);
-	kill_all(&data);
+	kill_all(&data, data.nb_philo);
 	return (0);
 }
 
 int	launch(t_ph *data)
 {
 	data->i = 0;
-	pthread_mutex_init(&data->m_start, NULL);
-	pthread_mutex_lock(&data->m_start);
+	gettimeofday(&data->start, NULL);
 	while (data->i < data->nb_philo)
 	{
-		gettimeofday(&data->philo[data->i].last_eat, NULL);
 		if (pthread_create(&data->philo[data->i].thread, NULL,
 				routine, &data->philo[data->i]))
 			return (EXIT_FAILURE);
+		gettimeofday(&data->philo[data->i].last_eat, NULL);
 		data->i++;
 	}
-	gettimeofday(&data->start, NULL);
-	pthread_mutex_unlock(&data->m_start);
 	return (EXIT_SUCCESS);
 }
 
 void	check_loop(t_ph *data)
 {
 	int	i;
-	int	end;
-	int	last_eat;
+	int	lock;
 
-	last_eat = 0;
-	usleep((data->t_die * 1000) / 2);
-	while (data->state_check.__opaque[24] == 0)
+	lock = 1;
+	while (lock)
 	{
-		end = 1;
+		data->i = 1;
 		i = 0;
-		while (i < data->nb_philo && last_eat == 0)
+		while (i < data->nb_philo && lock)
 		{
 			pthread_mutex_lock(&data->eat_check);
 			if (data->philo[i].eat != 0)
-				end = 0;
+				data->i = 0;
 			pthread_mutex_unlock(&data->eat_check);
-			if (g_last_eat(data->philo[i], data))
+			if (get_last_eat(&data->philo[i], data) >= data->t_die)
 			{
-				print_state(data->philo, data, _DIED);
-				last_eat = 1;
+				state_print(&data->philo[i], data, _DIED);
+				lock = 0;
 			}
 			i++;
 		}
-		if (end == 1)
-			pthread_mutex_lock(&data->state_check);
+		if (data->i == 1)
+			lock = 0;
 	}
 }
 
-void	kill_all(t_ph *data)
+void	kill_all(t_ph *data, int i)
 {
-	int	i;
-
-	i = 0;
+	pthread_mutex_lock(&data->state_check);
+	while (i)
+	{
+		i--;
+		data->philo[i].state = DEAD;
+		pthread_mutex_unlock(&data->fork[i]);
+	}
+	pthread_mutex_unlock(&data->state_check);
 	while (i < data->nb_philo)
 	{
 		pthread_join(data->philo[i].thread, NULL);
 		i++;
 	}
+	pthread_mutex_destroy(&data->eat_check);
+	pthread_mutex_destroy(&data->last_eat_check);
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->state_check);
+	free(data->philo);
 	while (i)
 	{
 		i--;
 		pthread_mutex_destroy(&data->fork[i]);
 	}
-}
-
-int	g_last_eat(t_lst_ph philo, t_ph *data)
-{
-	struct timeval	time;
-	int				ret;
-
-	gettimeofday(&time, NULL);
-	pthread_mutex_lock(&data->last_eat_check);
-	ret = ((philo.last_eat.tv_sec * 1000 - time.tv_sec * 1000)
-			+ (philo.last_eat.tv_usec / 1000 - time.tv_usec / 1000)) * -1;
-	pthread_mutex_unlock(&data->last_eat_check);
-	if (ret > data->t_die)
-		return (1);
-	return (0);
+	free(data->fork);
 }

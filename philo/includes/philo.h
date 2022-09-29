@@ -6,7 +6,7 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:53:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/28 18:00:58 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 16:07:19 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_ph
 	t_lst_ph		*philo;
 	pthread_mutex_t	*fork;
 	struct timeval	start;
-	pthread_mutex_t	m_start;
 	pthread_mutex_t	state_check;
 	pthread_mutex_t	eat_check;
 	pthread_mutex_t	last_eat_check;
@@ -111,6 +110,7 @@ void		*routine(void *temp);
 void		print_state(t_lst_ph *philo, t_ph *data, int state);
 void		ft_usleep(int time, t_ph *data);
 u_int64_t	get_time(t_ph *data);
+void		routine_loop(t_ph *data, t_lst_ph *philo);
 
 /***************************/
 /**          ERROR        **/

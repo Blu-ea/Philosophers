@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:02:01 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/26 15:00:06 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:09:38 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/new_philo.h"
+#include "../includes/old_philo.h"
 
 void	*routine(void *temp)
 {

@@ -6,7 +6,7 @@
 #    By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:03:53 by amiguez           #+#    #+#              #
-#    Updated: 2022/09/28 16:12:05 by amiguez          ###   ########.fr        #
+#    Updated: 2022/09/29 17:09:05 by amiguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ LST_SRCS	:=	main.c\
 				init.c\
 				sim.c
 LST_OBJS	:= $(LST_SRCS:.c=.o)
-LST_INCS	:= test.h
+LST_INCS	:= philo.h
 # **************************************************************************** #
-DIR_SRC	:= new__test
+DIR_SRC	:= new_srcs
 DIR_OBJ	:= .objs
 DIR_INC	:= includes
 # **************************************************************************** #

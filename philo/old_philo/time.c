@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:37:26 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/08 17:52:57 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:09:46 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/new_philo.h"
+#include "../includes/old_philo.h"
 
 u_int64_t	get_time(t_ph *data)
 {

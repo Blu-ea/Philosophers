@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:54:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/07 17:31:58 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:08:31 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/new_philo.h"
+#include "../includes/philo.h"
 
 int	ft_error(int id, t_ph *data)
 {

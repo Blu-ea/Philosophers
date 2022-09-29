@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 16:20:03 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 20:57:41 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:08:44 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/new_philo.h"
+#include "../includes/philo.h"
 
 int	parsing(char **argv)
 {

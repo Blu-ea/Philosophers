@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:52:13 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/28 18:50:18 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:08:49 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/test.h"
+#include "../includes/philo.h"
 
 void	*routine(void *temp)
 {
@@ -19,12 +19,18 @@ void	*routine(void *temp)
 
 	philo = temp;
 	data = philo->data;
-	while (data->m_start.__opaque[24] != 0)
+	while (data->state_check.__opaque[24] != 0)
 		;
 	gettimeofday(&philo->last_eat, NULL);
 	print_state(philo, data, _THINK);
 	if (philo->id % 2 != 0)
 		usleep((data->t_eat / 2) * 1000);
+	routine_loop(data, philo);
+	return (0);
+}
+
+void	routine_loop(t_ph *data, t_lst_ph *philo)
+{
 	while (data->state_check.__opaque[24] == 0)
 	{
 		if (philo->fork_l == philo->fork_r)
@@ -48,7 +54,6 @@ void	*routine(void *temp)
 		ft_usleep(data->t_sleep, data);
 		print_state(philo, data, _THINK);
 	}
-	return (0);
 }
 
 void	print_state(t_lst_ph *philo, t_ph *data, int state)

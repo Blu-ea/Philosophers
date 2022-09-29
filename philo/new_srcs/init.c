@@ -6,11 +6,11 @@
 /*   By: amiguez <amiguez@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:48:35 by amiguez           #+#    #+#             */
-/*   Updated: 2022/09/06 20:55:57 by amiguez          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:08:35 by amiguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/new_philo.h"
+#include "../includes/philo.h"
 
 int	init(int argc, char **argv, t_ph *data)
 {
